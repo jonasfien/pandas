@@ -178,6 +178,9 @@ class HTMLFormatter:
         self._write_cell(s, kind="th", indent=indent, tags=tags)
 
     def write_td(self, s: Any, indent: int = 0, tags: str | None = None) -> None:
+        if self.border is not None:
+            tags = tags or ""
+            tags += f'style="border: {self.border}px solid black;"'
         self._write_cell(s, kind="td", indent=indent, tags=tags)
 
     def _write_cell(
@@ -260,7 +263,7 @@ class HTMLFormatter:
         if self.border is None:
             border_attr = ""
         else:
-            border_attr = f' border="{self.border}"'
+            border_attr = f' style="border: {self.border}px solid black;'
 
         self.write(
             f'<table{border_attr} class="{" ".join(_classes)}"{id_section}>',
